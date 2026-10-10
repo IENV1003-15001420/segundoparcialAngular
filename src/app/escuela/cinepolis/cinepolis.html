@@ -1,1 +1,94 @@
-<p>cinepolis works!</p>
+  <div class="absolute inset-0 bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_WBpjdQVqFSBr-BCAom9E0DB4vWsEftsaPfBBPLpLSWDO5QNxDS1pXug&s=10')] bg-cover bg-center">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  <div class="max-w-4xl mx-auto mt-2 p-2 bg-[#195FB9] border-4 border-gray-300 rounded-lg shadow-xl text-white font-sans">
+  <div class="flex flex-col items-center justify-center mb-6">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Cin%C3%A9polis_logo.svg?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=original" 
+         alt="Logo Cinepolis" 
+         class="h-20 object-contain mb-3">
+    <h2 class="text-xl font-bold tracking-widest text-white">
+      LA CAPITAL DEL CINE
+    </h2>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="md:border-r-2 md:border-blue-400/50 pr-0 md:pr-8">
+      
+      <form [formGroup]="formulario">
+        <div class="flex flex-col gap-5 mb-6">
+          <div>
+            <label for="nombre" class="pl-4 block mb-1 text-medium font-medium text-white">Nombre del Cliente</label>
+            <input type="text" id="nombre" formControlName="nombre" 
+                   class="bg-[#374151] border-gray-600 text-white text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full px-4 py-2.5 placeholder-gray-400" 
+                   placeholder="Ingresar nombre">
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="compradores" class="pl-4 block mb-1 text-medium font-medium text-white">Número de Cliente(s)</label>
+              <input type="number" id="compradores" formControlName="cantClientes" 
+                     class="bg-[#374151] border-gray-600 text-white text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full px-4 py-2.5">
+            </div>
+            <div>
+              <label for="boletos" class="pl-4 block mb-1 text-medium font-medium text-white">Cantidad de Boletos</label>
+              <input type="number" id="boletos" formControlName="cantBoletos" 
+                     class="bg-[#374151] border-gray-600 text-white text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full px-4 py-2.5">
+              <p class="pl-4 mt-1 text-xs italic text-gray-300">Solo se permite 7 boletos por Cliente</p>
+            </div>
+          </div>
+          <div class="mt-2">
+            <label class="pl-4 block mb-2 text-medium font-medium text-white">Tarjeta Club Cinépolis</label>
+            <div class="flex items-center gap-6 pl-4">
+              <div class="flex items-center">
+                <input id="tarjeta-si" type="radio" value="Si" formControlName="tdCineco" 
+                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                <label for="tarjeta-si" class="ms-2 text-sm font-medium text-white">Sí</label>
+              </div>
+              <div class="flex items-center">
+                <input id="tarjeta-no" type="radio" value="No" formControlName="tdCineco" 
+                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                <label for="tarjeta-no" class="ms-2 text-sm font-medium text-white">No</label>
+              </div>
+            </div>
+            <p class="pl-4 mt-2 text-xs italic text-gray-300 font-medium">Si cuenta con Tarjeta Club Cinépolis obtendrá un descuento del 10% sobre el Total a Pagar</p>
+          </div>
+        </div>
+        <div class="flex justify-center gap-6 mt-8">
+          <button type="button" (click)="pagar()" 
+                  class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-full text-sm px-10 py-2.5 shadow-md transition-colors">
+            Pagar
+          </button>
+          <button type="button" (click)="salir()" 
+                  class="text-gray-300 bg-[#2d3748] hover:bg-gray-700 font-medium rounded-full text-sm px-10 py-2.5 shadow-md transition-colors">
+            Salir
+          </button>
+        </div>
+        <div class="mt-6 p-3 text-sm text-white rounded-lg bg-red-500/80 text-center font-bold"
+             [class.hidden]="!nuevaCompra.msnError">
+          {{ nuevaCompra.msnError }}
+        </div>
+      </form>
+    </div>
+    <div class="pl-0 md:pl-8 flex flex-col">    
+      <h3 class="text-center text-3xl font-bold text-white tracking-widest mb-10">Venta Realizada</h3>
+      <div class="grid grid-cols-2 gap-8 mb-8">
+        <div>
+          <label class="pl-2 block mb-2 text-medium font-bold text-white">Cliente</label>
+          <input type="text" value="{{ nuevaCompra.nombre }}" readonly 
+                 class="bg-[#374151] border-none text-white text-sm rounded-full block w-full px-4 py-3 cursor-not-allowed shadow-inner">
+        </div>
+        <div>
+          <label class="pl-2 block mb-2 text-medium font-bold text-white">Boletos</label>
+          <input type="text" value="{{ nuevaCompra.boletos }}" readonly 
+                 class="bg-[#374151] border-none text-white text-sm rounded-full block w-full px-4 py-3 cursor-not-allowed shadow-inner">
+        </div>
+      </div>
+      <div class="max-w-xs mx-auto w-full">
+        <label for="valorPagar" class="block mb-2 text-center text-lg font-bold text-white">Total a Pagar</label>
+        <input type="text" id="valorPagar" value="$ {{ nuevaCompra.totalPagar }}" readonly 
+               class="bg-[#374151] border-none text-gray-300 text-center text-2xl font-extrabold rounded-full block w-full px-4 py-4 cursor-not-allowed shadow-inner">
+      </div>
+    </div>
+  </div>
+</div>
